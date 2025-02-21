@@ -51,3 +51,8 @@ It's quick and easy! Get yours now.
 [15]: https://goo.gle/3Cg8KxJ
 [16]: https://github.com/google-pay/google-pay-button/discussions
 [17]: https://github.com/google-pay/google-pay-button/tree/main/examples/html/gpay-web-201/
+
+**MEMBERSHIP_PASSES**
+
+![Membership Program_GoCardless-QRCode](https://github.com/user-attachments/assets/d3465afa-6b7a-4f83-9a97-bf61af7b3c8c)
+

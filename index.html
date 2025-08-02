@@ -23,7 +23,23 @@
 
   <body>
     <div id="gpay-container"></div>
-    <p>Transaction info and errors will be logged to the console.</p>
+
+    <div id="transaction-container">
+      <h3>Transaction Log</h3>
+      <table id="transaction-log">
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Red Flag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Transaction rows will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+
     <script type="text/javascript" src="main.js"></script>
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 

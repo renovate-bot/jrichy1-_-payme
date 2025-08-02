@@ -137,6 +137,45 @@ function renderGooglePayButton() {
 }
 
 //=============================================================================
+// Transaction Log
+//=============================================================================
+
+/**
+ * Adds a new transaction to the log.
+ *
+ * @param {string} amount - The transaction amount.
+ * @param {string} status - The transaction status (e.g., "Success", "Failed").
+ * @param {string|undefined} error - An optional error message.
+ * @returns {void}
+ */
+function logTransaction(amount, status, error) {
+  const tableBody = document.querySelector('#transaction-log tbody');
+  const newRow = document.createElement('tr');
+
+  const isRedFlagged = amount > 100;
+  if (isRedFlagged) {
+    newRow.style.backgroundColor = 'lightcoral';
+  }
+
+  newRow.innerHTML = `
+    <td>$${amount}</td>
+    <td>${status}</td>
+    <td>${isRedFlagged ? 'Yes' : 'No'}</td>
+  `;
+
+  if (error) {
+    const errorRow = document.createElement('tr');
+    const errorCell = document.createElement('td');
+    errorCell.colSpan = 3;
+    errorCell.textContent = `Error: ${error}`;
+    errorRow.appendChild(errorCell);
+    tableBody.appendChild(errorRow);
+  }
+
+  tableBody.appendChild(newRow);
+}
+
+//=============================================================================
 // Event Handlers
 //=============================================================================
 
@@ -194,7 +233,7 @@ function onGooglePaymentButtonClicked() {
       countryCode: 'US',
       currencyCode: 'USD',
       totalPriceStatus: 'FINAL',
-      totalPrice: (Math.random() * 999 + 1).toFixed(2),
+      totalPrice: (Math.random() * 150).toFixed(2), // Generate amounts up to 150 to test red flag
     },
   };
 
@@ -214,7 +253,11 @@ function onGooglePaymentButtonClicked() {
       // unless they're used for merchant-initiated transactions with user
       // consent in place.
       paymentToken = res.paymentMethodData.tokenizationData.token;
+      logTransaction(req.transactionInfo.totalPrice, 'Success');
     })
     // If there is an error, log it to the console.
-    .catch(console.error);
+    .catch(function (err) {
+      console.error(err);
+      logTransaction('N/A', 'Failed', err.toString());
+    });
 }
